@@ -1,0 +1,69 @@
+
+<style>
+    #dropZone {
+        width: 100%;
+        height: 300px;
+        border: 2px dashed #aaa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #666;
+        font-size: 18px;
+    }
+    #dropZone.dragover {
+        border-color: #000;
+        background: #f8f8f8;
+    }
+</style>
+
+
+<div id="dropZone">
+  <p>Drag & drop an image here<br>or paste (Ctrl+V)</p>
+</div>
+
+<form id="hiddenUploadForm" method="POST" action="/upload" enctype="multipart/form-data">
+  <input type="file" id="fileInput" name="image" hidden>
+</form>
+
+<script>
+const dropZone = document.getElementById("dropZone");
+const fileInput = document.getElementById("fileInput");
+const form = document.getElementById("hiddenUploadForm");
+
+// Prevent default behavior
+["dragenter", "dragover", "dragleave", "drop"].forEach(event => {
+  dropZone.addEventListener(event, e => e.preventDefault());
+});
+
+dropZone.addEventListener("dragover", () => {
+  dropZone.classList.add("dragover");
+});
+
+dropZone.addEventListener("dragleave", () => {
+  dropZone.classList.remove("dragover");
+});
+
+dropZone.addEventListener("drop", e => {
+  dropZone.classList.remove("dragover");
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith("image/")) {
+    submitFile(file);
+  }
+});
+
+// Paste support
+document.addEventListener("paste", e => {
+  for (const item of e.clipboardData.items) {
+    if (item.type.startsWith("image/")) {
+      submitFile(item.getAsFile());
+    }
+  }
+});
+
+function submitFile(file) {
+  const dt = new DataTransfer();
+  dt.items.add(file);
+  fileInput.files = dt.files;
+  form.submit();
+}
+</script>

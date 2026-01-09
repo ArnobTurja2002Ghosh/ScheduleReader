@@ -4,7 +4,8 @@ from datetime import datetime, timedelta
 def parse_shift(text):
     if not text:
         return None
-
+    elif("-" not in text):
+       return None
     text = text.replace(" ", "")
     start_raw, end_raw = map(striptime, text.split("-"))
 

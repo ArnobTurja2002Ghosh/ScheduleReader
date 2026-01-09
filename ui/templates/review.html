@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Schedule OCR Review</title>
+        <script src="../static/GUI.js"></script>
+        <script src="../static/project1GUI.js"></script>
+    </head>
+    
+    <body>
+        
+        <h1>Schedule OCR Review</h1>
+         
+        
+        <div>
+            {% if table %}
+                <table style="width: 100%; margin-top: 20px;table-layout:fixed;">
+                    <tr>
+                        <td style="width: 50%; vertical-align: top;">
+                            <h2>Detected Table</h2>
+                            
+                            {% for t in table %}
+                                <table border="1" cellpadding="6">
+                                    {% for row in t %}
+                                        <tr>
+                                            {% for cell in row %}
+                                                <td>{{ cell }}</td>
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            {% endfor %}
+                        </td>
+                        <td style="width: 50%;">
+                            <h2>Original Image</h2>
+                            <img src="{{'/uploads/'+job_id }}" alt="Original Image" style="display:block; width:100%; height:auto;">
+                        </td>
+                    </tr>
+                </table>
+            {% endif %}
+        </div>
+        <div id="GAContainer" >
+        </div>
+        <script>
+            console.log("{{job_id}}");
+            
+            // construct the map based on the text in the textarea
+            let gui = new Project1GUI(document.getElementById("GAContainer"), "{{job_id}}");
+            //console.log(gui.settings.fitnessFunction);
+            let count;
+            // set up the main loop
+
+        </script>
+    </body>
+    
+</html>
