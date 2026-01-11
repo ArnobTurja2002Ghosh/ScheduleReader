@@ -19,6 +19,7 @@ def event_exists(service, calendar_id, source_id):
     return len(events.get("items", [])) > 0
 
 def shift_in_schedule(name, schedule):
+    list1=[]
     for shift in schedule[name]:
         event = shift_to_event(shift)
         print(event)
@@ -26,6 +27,7 @@ def shift_in_schedule(name, schedule):
 
         if event_exists(service, CALENDAR_ID, source_id):
             print("Skipping existing:", source_id)
+            list1.append("Skipping existing: "+ source_id)
             continue
 
         service.events().insert(
@@ -34,3 +36,6 @@ def shift_in_schedule(name, schedule):
         ).execute()
 
         print("Inserted:", source_id)
+        list1.append("Inserted: "+ source_id)
+
+    return list1

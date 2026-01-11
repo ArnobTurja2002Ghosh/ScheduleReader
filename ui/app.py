@@ -41,8 +41,8 @@ def verify(job_id):
     print(blocks)
     schedule = week_blocks_to_schedule(blocks)
     print(schedule)
-    shift_in_schedule("Arnob", schedule)
-    return "done"
+    list1=shift_in_schedule("Arnob", schedule)
+    return list1
 @app.route("/upload", methods=["GET","POST"])
 def upload():
     if request.method == 'POST':
